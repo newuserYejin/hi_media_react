@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const user = {
+            phone: "010-2222-2222"
+        }
+
+        // const element = (
+        //     <h1>hello, {user.name}</h1>
+        //     <h1>hello, {user.phone}</h1>
+        // );
+
+        // const element = (
+        //     <div>
+        //         <h1>hello, {user.name}</h1>
+        //         <h1>님 번호, {user.phone}</h1>
+        //     </div>
+        // );
+
+        // const element = (
+        //     <React.Fragment>
+        //         <h1>hello, {user.name}</h1>
+        //         <h1>님 번호, {user.phone}</h1>
+        //     </React.Fragment>
+        // );
+
+        const element = (
+            <>
+                <h1>hello, {user.name}</h1>
+                <h1>야호님 번호, {user.phone}</h1>
+            </>
+        );
+
+        ReactDOM.createRoot(document.getElementById("root")).render(element)
+
+    </script>
+
+</body>
+
+</html>

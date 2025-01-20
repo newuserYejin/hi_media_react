@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+
+        // function tick() {
+        //     const element = (
+        //         <>
+        //             <h1>현재 시간은?</h1>
+        //             <h3>지금은 {new Date().toLocaleTimeString()}</h3>
+        //         </>
+        //     )
+
+        //     root.render(element)
+        // }
+
+        // setInterval(tick, 1000);
+
+        const answer = parseInt(prompt(" 1또는 2입력"))
+
+        // 2-3 && 사용
+        // const element = answer === 1 && <h1>앞으로도 진행 중중</h1>
+
+        // console.log(element)
+
+        // false 조건을 가지고 렌더링하는 경우 조건이 일치하지 않으면 렌더링 되는 요소가 없지만 0의 경우는 Falsy 한 값임에도 조건부 엘리먼트 생성하게 되면
+        // 0을 반환하게 된다.
+
+        // Falsy : null, undefined, 0, NaN, '' 등등
+
+        const num = 0;
+
+        root.render(element)
+
+    </script>
+
+</body>
+
+</html>

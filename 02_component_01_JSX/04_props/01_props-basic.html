@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        // props 는 읽기 전용 객체이다. 따라서 값 수정 불가.
+
+        // 순수함수 = 동일한 입력 값에 대해 동일한 결과를 반환하는 것
+
+        const name1 = "길동이"
+        const name2 = "홍길동"
+
+        // function Name(props) {
+
+        //     console.log("props: ", props)
+
+        //     return <h1>{props.name}님, 안녕하세요!!</h1>
+        // }
+
+        function Name({ name }) {
+            return <h1>{name}님, 안녕하세요!!</h1>
+        }
+
+        Name.defaultProps = {
+            name: "기본"
+        }
+
+        ReactDOM.createRoot(document.getElementById("root")).render(
+            [
+                <Name name={name1} />,
+                <Name name={name2} />,
+                <Name />,
+                <Name name={"밥밥"} />
+
+            ]
+        )
+
+    </script>
+
+</body>
+
+</html>
