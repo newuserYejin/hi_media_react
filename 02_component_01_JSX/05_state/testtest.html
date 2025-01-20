@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const { useState } = React;
+
+        const TimerStop = () => {
+            const [presentTimer, setPresentTimer] = useState(0);
+            const [timerStart, setTimerStart] = useState(false);
+            const [timerId, setTimerId] = useState(null);
+            const [stopTime, setStopTime] = useState(0);
+
+            const startTimerHandler = () => {
+
+                if (!timerStart) {
+
+                    const id = setInterval(() => {
+                        setPresentTimer((prevValue) => prevValue + 1)
+                    }, 1000)
+
+                    setTimerStart(true)
+
+                    setTimerId(id)
+                }
+
+            }
+
+            const stopTimerHandler = () => {
+                setTimerStart(false)
+                setPresentTimer(0)
+                clearInterval(timerId);
+            }
+
+            const writeTime = () => {
+                setStopTime(presentTimer)
+            }
+
+            return (
+                <>
+                    <h1>타이머 시간 : {presentTimer}</h1>
+                    <button onClick={startTimerHandler}>타이머 시작</button>
+                    <button onClick={stopTimerHandler}>타이머 종료</button>
+
+                    <button onClick={writeTime}>기록하기</button>
+                    <h2>현재 타이머 시간 : {stopTime}초</h2>
+                </>
+            )
+
+            // <button onClick={stopTimerHandler}>타이머 중지</button>
+
+        }
+
+        ReactDOM.createRoot(document.getElementById("root")).render(
+            <TimerStop />
+        )
+
+    </script>
+
+</body>
+
+</html>

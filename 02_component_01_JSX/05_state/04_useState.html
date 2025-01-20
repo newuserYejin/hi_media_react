@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        // 함수형에서는 state를 관리하기 위해서 useState 사용
+
+        const { useState } = React;
+
+        function Test() {
+
+            // console.log("useState : ", useState("기본값"))
+
+            // useState 함수는 반환형이 2칸짜리 배열이다.
+
+            // 1번째는 default 값, 2번째는 요소의 f 함수이다.
+
+            const [message, setMessage] = useState("문구 기본 값");
+            const [color, setColor] = useState("black");
+            const [backColor, setBackColor] = useState("none");
+
+            const onClickEnter = () => {
+                setMessage("안녕하세요!!")
+                setColor("blue")
+            }
+
+            const onClickLeave = () => {
+                setMessage("퇴장하셨습니다.")
+                setColor("red")
+            }
+
+            const [inputText, setInputText] = useState("입력 된 값이 없습니다.")
+
+            return (
+                <>
+                    <h1 style={{ color, backgroundColor: backColor }}>{message}</h1>
+                    <button onClick={onClickEnter}>입장</button>
+                    <button onClick={onClickLeave}>퇴장</button>
+                    <button onClick={onClickLeave}>빨간색</button>
+                    <button onClick={onClickLeave}>보라색</button>
+                    <button onClick={onClickLeave}>초록색</button>
+                    <button onClick={onClickLeave}>기본 배경</button>
+                    <button onClick={onClickLeave}>반전 배경</button>
+
+                    <br />
+                    <label htmlFor="title">입력된 값 : {inputText}</label>
+
+                    <br />
+                    <input value={inputText} id="title" name="title" type="text" onChange={(event) => {
+                        setInputText(event.target.value)
+                    }} />
+                    <br />
+
+                    <h2>랜덤 숫자 게임</h2>
+                </>
+
+            )
+
+        }
+
+        ReactDOM.createRoot(document.getElementById("root")).render(<Test />)
+
+    </script>
+
+</body>
+
+</html>

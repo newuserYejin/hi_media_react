@@ -23,9 +23,34 @@
     <script type="text/babel">
 
         class Counter extends React.Component {
+
+            constructor(props) {
+
+                console.log("생성자 호출 중")
+
+                super(props)
+
+                // 생성자 내부에서 관리할 값 state 사용 방법
+
+                // 1. state 는 this. 을 명시해야 한다.
+                // 2. 변수명은 반드시 state 이어야 한다.
+                // 3. state 애 저장되는 값의 형태는 반드시 Object 리터럴 형식
+
+                this.state = {
+                    number: 0
+                };
+            }
+
             render() {
+                console.log("랜더 호출")
+
+                const { number } = this.state;
+
                 return (
                     <>
+                        <h1>현재 number: {number}</h1>
+                        <button onClick={() => { this.setState({ number: number - 1 }) }}>-1</button>
+                        <button onClick={() => { this.setState({ number: number + 1 }) }}>+1</button>
                     </>
                 )
             }
