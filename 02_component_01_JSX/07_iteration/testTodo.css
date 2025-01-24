@@ -1,0 +1,95 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+
+    width: 100;
+    height: 100%;
+}
+
+body {}
+
+#root {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .header {
+        background-color: black;
+
+        color: white;
+        text-align: center;
+        padding: 15px 0;
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    .mainBox {
+        width: 100%;
+        flex: 1;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .listTitle {
+            font-weight: bold;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .listBox {
+            width: 50%;
+            height: 70%;
+            border: solid 1px black;
+            margin-bottom: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+
+            .listItem {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+                padding: 5px;
+
+                border-bottom: 1px black solid;
+
+                label {
+                    margin: 0 20px;
+                }
+
+                input:checked+label {
+                    text-decoration: line-through wavy;
+                    text-decoration-color: green;
+                }
+
+                .removeBtn {
+                    background: none;
+                    background-color: gray;
+                    color: white;
+                    border: none;
+                    padding: 4px 10px;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+    }
+
+    .footer {
+        background-color: black;
+
+        color: white;
+        text-align: center;
+        padding: 15px 0;
+
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+}

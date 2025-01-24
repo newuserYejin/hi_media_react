@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="testTodo.css">
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const { useState, useEffect } = React;
+
+        function Header() {
+            const [today, setToday] = useState(new Date())
+
+            // setInterval
+
+            useEffect(() => {
+                console.log('시간이 흐르는 중 : ')
+
+                const timerId = setInterval(() => {
+                    setToday(new Date())
+                }, 1000)
+
+                return () => clearInterval(timerId)
+
+            }, [])
+
+            return (
+                <div className='header'>
+                    <div>오늘의 할 일 ! {today.getFullYear() + " / " + (today.getMonth() + 1) + " / " + today.getDate() + " "
+                        + today.getHours() + " : " + today.getMinutes() + " : " + today.getSeconds()}
+                    </div>
+                </div>
+            )
+        }
+
+        function Footer() {
+            return (
+                <div className='footer'>
+                    <div>footer 입니다.</div>
+                </div>
+            )
+        }
+
+        function MainBox() {
+
+            const [inputValue, setInputValue] = useState('')
+            const [todoList, setTodoList] = useState([])
+            const [idNum, setIdNum] = useState(1)
+
+            const onChangeHandler = (e) => {
+
+                setInputValue(e.target.value)
+            }
+
+            const onClickHandler = () => {
+
+                setTodoList((prev) => [
+                    ...prev,
+                    {
+                        id: idNum,
+                        content: inputValue
+                    }
+                ])
+
+                setInputValue('')
+                // id 값으로 사용 할 변수 증가 시키기
+                setIdNum(idNum + 1);
+            }
+
+            const onRemove = (idNum) => {
+
+                const deleteItem = document.getElementById(idNum)
+
+                if (deleteItem.checked) {
+                    const filterList = todoList.filter((item) => (
+                        item.id != idNum
+                    ))
+
+                    setTodoList(filterList)
+                } else {
+                    alert("할일은 해야죠!")
+                }
+            }
+
+            const name = () => {
+
+            }
+
+            const name2 = asd
+
+            const ListItem = ({ item }) => {
+                return (
+                    <div className='listItem'>
+                        <input type="checkbox" id={item.id} />
+                        <label htmlFor={item.id}>{item.content}</label>
+                        <button className='removeBtn' onClick={() => onRemove(item.id)}>삭제</button>
+                    </div>
+                )
+            }
+
+            return (
+                <div className='mainBox'>
+                    <div className='listTitle'>ToDo-List : {todoList.length}개</div>
+                    <div className='listBox'>
+                        {todoList.map((item) => (
+                            <ListItem key={item.id} item={item} />
+                        ))}
+                    </div>
+                    <div>
+                        <input type="text" value={inputValue} onChange={onChangeHandler} />
+                        <button onClick={onClickHandler}>등록</button>
+                    </div>
+                </div>
+            )
+        }
+
+        // ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(Title))
+        ReactDOM.createRoot(document.getElementById("root")).render(
+            [
+                <Header />,
+                <MainBox />,
+                <Footer />
+            ]
+        )
+
+    </script>
+
+</body>
+
+</html>

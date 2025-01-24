@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const { useReducer } = React
+
+        function str(value, action) {
+            const newState = {
+                ...value,
+                [action.name]: action.value
+            }
+
+            return newState
+        }
+
+        function ReducerFn() {
+            const [state, dispatch] = useReducer(str, { userId: '', userPwd: '' })
+
+            return (
+                <>
+                    <label>아이디 : </label>
+                    <input type="text" name="userId" onChange={(e) => dispatch(e.target)} />
+                    <br />
+                    <label>비밀번호 : </label>
+                    <input type="text" name="userPwd" onChange={(e) => dispatch(e.target)} />
+                    <br />
+
+                    <div>입력한 ID값 : {state.userId}</div>
+                    <div>입력한 Pw값 : {state.userPwd}</div>
+
+                </>
+            )
+        }
+
+        ReactDOM.createRoot(document.getElementById("root")).render(<ReducerFn />)
+
+    </script>
+</body>
+
+</html>

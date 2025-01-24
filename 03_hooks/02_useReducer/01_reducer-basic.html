@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        // const { useState } = React
+
+        // function Counter() {
+        //     const [number, setNumber] = useState({ value: 0 });
+
+        //     return (
+        //         <>
+        //             <h1>Count : {number.value}</h1>
+        //             <button onClick={() => { setNumber({ value: number.value - 1 }) }}>- 1</button>
+        //             <button onClick={() => { setNumber({ value: number.value + 1 }) }}>+ 1</button>
+        //         </>
+        //     )
+
+        // }
+
+        /*
+            useReducer는 useState와는 다르게 불러오는 컴포넌트(<Counter />라고 호출하는 것들)내에서
+            setState를 이용한 상태변경이 아니라, 외부의 함수를 이용해서 type 상태에 맞게 작성하여 컴포넌트의 코드를 줄일 수 있다.
+        */
+
+        /*
+            reducer는 2개의 인자를 갖는다.
+            1. reducer의 함수(외부 함수)
+            2. 관리 할 상태 state
+        */
+
+        const { useReducer } = React
+
+        // 컴포넌트가 아닌 함수로써 동작 할 예정이기 때문에 소문자로 시작
+        function reducer(state, action) {
+            console.log("reducer 함수 부름!")
+
+            // 현재의 값
+            console.log("state: ", state)
+
+            // type 값
+            console.log("action: ", action)
+
+            switch (action.type) {
+                case 'DESC':
+                    return { value: state.value - 1 }
+                case 'ASC':
+                    return { value: state + 1 }
+                default:
+                    return state
+            }
+        }
+
+        function Counter() {
+            console.log(useReducer(reducer, { value: 0 }))
+
+            const [state, dispatch] = useReducer(reducer, { value: 0 })
+
+            return (
+                <>
+                    <h1>Count : {state.value}</h1>
+                    <button onClick={() => dispatch({ type: 'DESC' })}>- 1</button>
+                    <button onClick={() => dispatch({ type: 'ASC' })}>+ 1</button>
+                </>
+            )
+
+        }
+
+        ReactDOM.createRoot(document.getElementById("root")).render(<Counter />)
+
+    </script>
+
+
+</body>
+
+</html>

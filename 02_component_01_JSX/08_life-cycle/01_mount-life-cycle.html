@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        class MountTest extends React.Component {
+            constructor(props) {
+                console.log("생성자 호출")
+                console.log("생성시 전달 받은 props : ", props)
+
+                super(props)
+
+                this.state = {
+                    text: "초기값"
+                }
+            }
+
+            static getDerivedStateFromProps(props, state) {
+                console.log("getDerivedStateFromProps 동작 함")
+                console.log(`props : ${props}`)
+                console.log(`state : ${state}`)
+
+                // 만약 전달 받은 props 를 state 바꿀 필요가 없다면 null 반환
+
+                // return null;
+
+                return { text: props.names }
+            }
+
+            render() {
+                console.log("render 함수 호출 됨")
+
+                return (
+                    <h1>현재 관리중인 state : {this.state.text}</h1>
+                )
+            }
+
+            componentDidMount() {
+                console.log("componentDidMount 동작함")
+            }
+
+        }
+
+        // ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(Title))
+        ReactDOM.createRoot(document.getElementById("root")).render(
+            <MountTest names="값" />
+        )
+
+    </script>
+
+
+</body>
+
+</html>

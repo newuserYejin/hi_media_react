@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const { useState, useEffect } = React
+
+        function Login() {
+
+            const [formData, setFormData] = useState({
+                userId: '',
+                userPwd: ''
+            })
+
+            const onClickHandler = () => {
+                const userId = document.querySelector("input[name ='userId']")
+                console.log("userId : ", userId.value)
+
+                const userPwd = document.querySelector("input[name ='userPwd']")
+                console.log("userPwd : ", userPwd.value)
+
+                if (!userId.value || userId.value.trim() == '' || !userPwd.value || userPwd.value.trim() == '') {
+                    alert("아이디와 비밀번호를 모두 입력해주세요")
+                } else {
+                    setFormData({
+                        userId: userId.value.trim(),
+                        userPwd: userPwd.value.trim()
+                    })
+                    userId.value = ''
+                    userPwd.value = ''
+                }
+            }
+
+            useEffect(() => {
+                console.log("formData : ", formData)
+            }, [formData])
+
+            return (
+                <>
+                    <label>아이디 : </label>
+                    <input type="text" name="userId" />
+                    <br />
+
+                    <label>비밀번호 : </label>
+                    <input type="password" name="userPwd" />
+                    <br />
+
+                    <button onClick={onClickHandler}>로그인 하기</button>
+
+                    <h1>입력한 아이디 : {formData.userId}</h1>
+                    <h1>입력한 비밀번호 : {formData.userPwd}</h1>
+
+                </>
+            )
+        }
+
+
+        // ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(Title))
+        ReactDOM.createRoot(document.getElementById("root")).render(<Login />)
+
+    </script>
+
+
+</body>
+
+</html>

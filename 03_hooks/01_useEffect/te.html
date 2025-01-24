@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const { useState, useEffect } = React;
+
+        function InsertNumber() {
+            const [insertNum, setInsertNum] = useState();
+            const [testNum, setTestNum] = useState(0);
+            const [promptTime, setPromptTime] = useState();
+
+            useEffect(() => {
+                const inputNum = prompt('숫자입력해보세요~');
+                setTestNum(inputNum)
+
+                console.log("testNum : ", inputNum)
+
+                console.log('프롬포트창에서 입력한 후의 시간')
+
+                setPromptTime(new Date().toLocaleTimeString());
+                console.log(promptTime);
+            }, []);
+
+            useEffect(() => {
+                if (testNum === insertNum) {
+                    alert(`시작 시간 : ${promptTime} , 종료 시간 : ${new Date().toLocaleTimeString()}`)
+                }
+            }, [insertNum])
+
+            const onKeyUpHandler = (e) => {
+
+                if (e.key === 'Enter') {
+
+                    setInsertNum(e.target.value)
+                    console.log(insertNum)
+
+                    // if (testNum === insertNum) {
+                    //     alert(`시작 시간 : ${promptTime} , 종료 시간 : ${new Date().toLocaleTimeString()}`)
+                    // }
+                }
+            }
+
+            return (
+                <>
+                    <div>
+                        <h1>입력한 값 : {testNum}</h1>
+                        <input type="text" onKeyPress={onKeyUpHandler} />
+                    </div>
+                </>
+            );
+
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<InsertNumber />);
+
+    </script>
+
+</body>
+
+</html>

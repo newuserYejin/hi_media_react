@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        class EventComponent extends React.Component {
+
+            state = {
+                inputValue: '',
+                outputValue: ''
+            }
+
+            constructor(props) {
+
+                super(props)
+
+                this.onChangeHandler = this.onChangeHandler.bind(this)
+                this.onClickHandler = this.onClickHandler.bind(this)
+            }
+
+            onChangeHandler(e) {
+                this.setState({
+                    inputValue: e.target.value
+                })
+            }
+
+            onClickHandler() {
+                console.log("inputMsg : ", this.state.inputValue)
+                alert(this.state.inputValue)
+                this.setState({
+                    inputValue: ''
+                })
+            }
+
+            // onClickHandler = () => {
+            //     console.log("inputMsg : ", this.state.inputValue)
+            //     alert(this.state.inputValue)
+            //     this.setState({
+            //         inputValue: ''
+            //     })
+            // }
+
+            render() {
+
+
+                return (
+                    <>
+                        <h1>이벤트 핸들러</h1>
+                        <input type="text" placeholder="텍스트 입력하삼" value={this.state.inputValue} onChange={(e) => this.onChangeHandler(e)} />
+                        <button onClick={this.onClickHandler}>지우기</button>
+                        <h4>출력 값 : {this.state.outputValue}</h4>
+                    </>
+                )
+
+            }
+
+        }
+
+        // ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(Title))
+        ReactDOM.createRoot(document.getElementById("root")).render(
+            <EventComponent></EventComponent>
+        )
+
+    </script>
+
+</body>
+
+</html>

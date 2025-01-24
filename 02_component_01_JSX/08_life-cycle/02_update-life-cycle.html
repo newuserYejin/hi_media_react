@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        /*
+            1. props 변경
+            2. state 변경
+            3. 부모 컴포넌트의 리렌더링
+            4. forceUpdate(거의 사용하지 않는다.)
+        */
+
+        class Time extends React.Component {
+            // 1. 생성자
+            constructor(props) {
+                console.log("생성자 동작함")
+
+                super(props)
+
+                this.state = {
+                    now: new Date().toLocaleTimeString()
+                }
+
+                console.log("props : ", props)
+                console.log("state : ", this.state)
+            }
+
+            // 2. props를 state로 변경
+            static getDerivedStateFromProps(props, state) {
+                console.log("getDerivedStateFromProps 동작함")
+
+                console.log("props : ", props)
+                console.log("state : ", state)
+
+                return null;
+            }
+            // 3. 컴포넌트가 리렌더링을 할 것인지 말지 정하는 메소드 (render() 함수 호출 유무 결정))
+            shouldComponentUpdate(props, state) {
+                // props, state 를 전달받아 컴포넌트를 재구성 할지 말지 결정 가능
+                // 리렌더링 방지용으로 사용
+
+                console.log("shouldComponentUpdate 동작함")
+                console.log("props : ", props)
+                console.log("state : ", state)
+
+                // false 반환시 리렌더링 안함
+                return true;
+            }
+
+
+            render() {
+                console.log("render 동작")
+                return (
+                    <>
+                        <button>호이짜</button>
+                    </>
+                )
+            }
+
+            // 컴포넌트 변화를 실제 DOM에 반영하기 직전에 호출
+            getSnapshotBeforeUpdate(props, state) {
+
+            }
+
+        }
+
+
+        ReactDOM.createRoot(document.getElementById("root")).render(
+            <Time />
+        )
+
+    </script>
+
+</body>
+
+</html>

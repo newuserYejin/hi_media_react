@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const { useState } = React;
+
+        function App() {
+
+            const [users, setUsers] = useState([
+                { id: 1, name: "푸바오" },
+                { id: 2, name: "러바오" },
+                { id: 3, name: "아이바오" }
+            ])
+
+            const [text, setText] = useState('');
+
+            // id(key 값) 증가 상태관리
+            const [nextId, setNextId] = useState(4)
+
+            // 내가 만든거
+
+            // const onClickHandler = () => {
+
+            //     setUsers([
+            //         ...users,
+            //         {
+            //             id: nextId,
+            //             name: text
+            //         }
+            //     ])
+            //     setNextId((prev) => prev + 1)
+            //     setText('')
+            // }
+
+            // 선생님꺼
+
+            const onClickHandler = () => {
+                const changeUser = users.concat({
+                    id: nextId,
+                    name: text
+                })
+
+                setNextId(nextId + 1)
+                setUsers(changeUser)
+                setText('')
+            }
+
+            const onChangeHandler = (e) => {
+                setText(e.target.value)
+            }
+
+            const onRemove = (id) => {
+                // filter 사용
+                console.log("prev filter : ", users)
+
+                const filterUsers = users.filter((user) => user.id != id)
+                setUsers(filterUsers)
+                console.log("filter : ", filterUsers)
+            }
+
+            const Repeat = users.map((user) => {
+                return (
+                    <>
+                        <li key={user.id} onClick={() => onRemove(user.id)}>{user.name}</li>
+                        <button onClick={() => onRemove(user.id)}>{user.name}</button>
+                    </>
+                )
+            })
+
+            return (
+                <>
+                    <input type="text" value={text} onChange={onChangeHandler} />
+                    <button onClick={onClickHandler}>추가하기</button>
+
+                    <ul>
+                        {users.map((user) => {
+                            return (
+                                <>
+                                    <li key={user.id}>{user.name}</li>
+                                    <button onClick={() => onRemove(user.id)}>삭제</button>
+                                </>
+                            )
+                        })}
+                    </ul>
+                </>
+            )
+        }
+
+        // ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(Title))
+        ReactDOM.createRoot(document.getElementById("root")).render(
+            <App />
+        )
+
+    </script>
+
+</body>
+
+</html>

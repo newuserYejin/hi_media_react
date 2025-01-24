@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const { useState, useEffect } = React
+
+        function CheckTime() {
+            const [startTime, setStartTime] = useState();
+            const [str, setStr] = useState('')
+
+            useEffect(() => {
+                setStr(prompt("입력하삼"))
+
+                console.log(new Date().getTime())
+
+                setStartTime(new Date().getTime())
+            }, [])
+
+            function checkValue(event) {
+
+                if (event.key == 'Enter') {
+                    console.log("비교 결과 : ", str == event.target.value)
+                    if (str == event.target.value) {
+                        console.log("종료 시간 : ", new Date().getTime())
+                        console.log("진행시간 : ", new Date().getTime() - startTime)
+
+                        alert(`일치 문자열 출력 시간까지 걸린 시간 : ${new Date().getTime() - startTime} (ms)`)
+                    }
+                }
+            }
+
+            return (
+                <>
+                    <h1>입력 값 : {str}</h1>
+                    <input type="text" onKeyUp={checkValue} />
+                </>
+            )
+        }
+
+        ReactDOM.createRoot(document.getElementById("root")).render(<CheckTime />)
+
+    </script>
+
+</body>
+
+</html>
