@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const { useState, useRef } = React;
+
+        console.log("useRef : ", useRef)
+
+        function App() {
+            const [number, setNumber] = useState(0)
+            let variable = 0;
+            const numberRef = useRef(0)
+
+            console.log('App 컴포넌트 랜더링')
+
+            function increaseNumber() {
+                setNumber(prev => prev + 1)
+            }
+
+            const increaseVariable = () => {
+                variable++;
+                console.log("variable : ", variable)
+            }
+
+            const increaseRef = () => {
+                console.log("numberRef : ", numberRef)
+                numberRef.current++;
+                console.log("numberRef.current : ", numberRef.current)
+            }
+
+            // useState 와 useRef의 차이
+
+            /*
+                useState 는 값이 변경되면 reRendering 이 발생한다.
+                하지만,
+                useRef는 값이 변경되고 내부적으로는 반영되지만 reRendering 은 발생하지 않는다.
+                따라서 값을 변경하고 reRendering 이 발생되었을 때 화면에 적용하게 된다.
+            */
+
+            return (
+                <>
+                    <h1>number : {number}</h1>
+                    <h1>variable : {variable}</h1>
+                    <h1>numberRef : {numberRef.current}</h1>
+                    <button onClick={increaseNumber}>number +1</button>
+                    <button onClick={increaseVariable}>variable +1</button>
+                    <button onClick={increaseRef}>ref +1</button>
+                </>
+            )
+
+        }
+
+        ReactDOM.createRoot(document.getElementById("root")).render(<App />)
+
+    </script>
+
+</body>
+
+</html>

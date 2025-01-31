@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const { useState, useEffect, useCallback } = React;
+
+        function App() {
+
+            const [size, setSize] = useState(200)
+            const [isDark, setIsDark] = useState(false)
+
+            // const childStyle = {
+            //     width: size + "px",
+            //     height: size + "px",
+            //     backgroundColor: "red",
+            // }
+
+            const childStyle = useCallback(() => {
+                return {
+                    // width: size + "px",
+                    // height: size + "px",
+                    width: `${size}px`,
+                    height: `${size}px`,
+                    backgroundColor: "red"
+                }
+            }, [size])
+
+            function Square({ childStyle }) {
+                // const { width, height, backgroundColor } = childStyle
+
+                // 부모인 APP 컴포넌트가 변경되면 App이 리랜더링 되면서 Square도 리랜더링 된다. => 비효율적
+
+                console.log("자식 변경")
+
+                const [style, setStyle] = useState({})
+
+                useEffect(() => {
+                    console.log("style 체크")
+                    setStyle(childStyle)
+                }, [childStyle])
+
+                return (
+                    // <div style={{ width, height, backgroundColor }}></div>
+                    <div style={style}></div>
+                )
+            }
+
+            return (
+                <div style={{ backgroundColor: isDark ? "black" : "white", height: (size + 50) + "px" }}>
+                    <input type="range" min="100" max="300" onChange={e => setSize(parseInt(e.target.value))} />
+                    <button onClick={() => setIsDark(!isDark)}>{String(isDark)}</button>
+
+                    <Square childStyle={childStyle} />
+
+                    {/*<div style={{ width: size + "px", height: size + "px", backgroundColor: "red" }}></div>*/}
+                </div>
+            )
+
+        }
+
+        ReactDOM.createRoot(document.getElementById("root")).render(<App />)
+
+    </script>
+
+</body>
+
+</html>
