@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script crossorigin src="https://unpkg.com/redux@4.2.0/dist/redux.js"></script>
+    <script crossorigin src="https://unpkg.com/react-redux@8.0.4/dist/react-redux.js"></script>
+    <script crossorigin src="https://unpkg.com/redux-actions@2.6.5/dist/redux-actions.js"></script>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const { Provider, useSelector, useDispatch } = ReactRedux;
+        const { createStore } = Redux;
+        const { createAction, createActions, handleActions } = ReduxActions;
+
+        //Ducks 패턴에 의하면 초기값, 액션, 리듀서를 관련있는 State 별로 modules 라는 페키지 하위에 관리한다.
+        //----------------------CountModules.js---------------------
+
+        // 1. 초기값
+        const initCount = 0
+
+        // 2. 액션 (type 을 지정하는데 구조분해 받을 때의 구조가 연결된 것과 같아야 한다.)
+        const INCREMENT = 'count/INCREASE'
+        const DECREMENT = 'count/DECREASE'
+
+        // 1) createAction 사용
+        // const increase = createAction(INCREMENT, (amount = 1) => ({ incrementValue: amount }));
+        // const decrease = createAction(DECREMENT, (amount = 1) => ({ decrementValue: amount }));
+
+        // console.log(increase())
+        // console.log(decrease())
+
+        // 2) createActions 사용
+        const { count: { decrease, increase } } = createActions({
+            [INCREMENT]: (amount = 1) => ({ incrementValue: amount }),
+            [DECREMENT]: (amount = 1) => ({ decrementValue: amount }),
+        })
+
+        console.log("increase : ", increase())
+        console.log("decrease : ", decrease())
+
+        // 3. handleActions 를 사용해서 create 한 action 핸들링
+        // switch 문 쓰지 않고 키 값과 일치하는 액션 호출
+        // 첫번째 인자 : 핸들링 할 액션 함수
+        // 두번째 인자 : 초기 값
+        const numReducer = handleActions({
+            [INCREMENT]: (state, { payload: { incrementValue } }) => {
+                return state + incrementValue
+            },
+            [DECREMENT]: (state, { payload: { decrementValue } }) => {
+                return state - decrementValue
+            }
+        }, initCount)
+
+
+        //-----------------------------------------------------------
+        //----------------------src/pages/Count.js-------------------
+
+        function Count() {
+
+            const count = useSelector(state => state)
+            const dispatch = useDispatch();
+
+            const increaseCount = () => {
+                // 외부 파일에 정의된 action(increase) 호출
+                dispatch(increase())
+            }
+
+            const decreaseCount = () => {
+                dispatch(decrease())
+            }
+
+            return (
+                <>
+                    <h1>Count : {count}</h1>
+                    <button onClick={increaseCount}>+ 1</button>
+                    <button onClick={decreaseCount}>- 2</button>
+                </>
+            )
+        }
+
+        //----------------------------------------------------
+        //----------------------src/store.js------------------
+
+        const store = createStore(
+            numReducer,
+            window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+        )
+
+        //----------------------------------------------------
+        //----------------------src/index.js------------------
+
+        ReactDOM.createRoot(document.getElementById("root"))
+            .render(
+                <Provider store={store}>
+                    <Count />
+                </Provider>
+            )
+
+    </script>
+
+</body>
+
+</html>

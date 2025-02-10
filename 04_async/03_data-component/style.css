@@ -1,0 +1,11 @@
+.userItem {
+    width: max-content;
+    display: flex;
+    padding-bottom: 15px;
+    border-bottom: dotted 4px black;
+    margin-top: 10px;
+
+    div {
+        margin-right: 10px;
+    }
+}

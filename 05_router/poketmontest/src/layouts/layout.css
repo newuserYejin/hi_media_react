@@ -1,0 +1,7 @@
+.mainContentDiv {
+    width: 100%;
+    flex: 1;
+    box-sizing: border-box;
+
+    padding: 40px 100px;
+}

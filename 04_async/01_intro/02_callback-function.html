@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+
+        /*
+            비동기 처리를 하기 위한 흔한 방법은 콜백함수를 이용하는 것이다.
+            하지만 콜랙 지옥이 발생할 수 있다.
+        */
+
+        // 10씩 증가
+
+        function increase(number, callback) {
+            setTimeout(() => {
+
+                const result = number + 10;
+
+                if (callback) {
+                    callback(result)
+                }
+
+            }, 1000)
+        }
+
+        // increase(0, result => console.log(result))
+
+        // 누적 증가 시키기
+
+        console.log("start");
+
+        increase(0, result => {
+            console.log("result: ", result);
+            increase(result, result => {
+                console.log("result: ", result);
+                increase(result, result => {
+                    console.log("result: ", result);
+                    increase(result, result => {
+                        console.log("result: ", result);
+                    });
+                });
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>

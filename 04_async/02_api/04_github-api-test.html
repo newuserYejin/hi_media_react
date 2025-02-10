@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        // 1. 관리할 값 : input 검색어, image
+        // 2. 이벤트 : input change, 검색 click
+        // 3. 컴포넌트 : App, searchBox, imageBox
+        // 4. 시점 : 이미지 변경 시점 -> 검색 버튼 눌렀을 때 
+
+        const { useState, useEffect } = React;
+
+        const SearchBox = ({ setImageUrl }) => {
+
+            const [imageName, setImageName] = useState('')
+
+            function onChangeHandler(e) {
+                setImageName(e.target.value)
+            }
+
+            // function onClickHandler() {
+            //     // 버튼 클릭 시 api로 부터 이모지 데이터 조회
+
+            //     // 1. fetch 
+            //     // fetch('https://api.github.com/emojis')
+            //     //     .then(response => response.json())
+            //     //     .then(data => {
+            //     //         setImageUrl(data[imageName] ? data[imageName] : data["1st_place_medal"])
+            //     //     })
+
+            //     // // 2. axios
+
+            //     // axios.get('https://api.github.com/emojis')
+            //     //     .then(response => {
+            //     //         setImageUrl(response.data[imageName] ? response.data[imageName] : response.data["1st_place_medal"])
+            //     //     })
+            //     //     .catch(e => console.log(`에러 발생 : ${e}`))
+            // }
+
+            // 3. await
+            async function onClickHandler() {
+
+                const data = await fetch('https://api.github.com/emojis')
+                    .then(response => response.json())
+
+                setImageUrl(data[imageName] ? data[imageName] : data["1st_place_medal"])
+            }
+
+            function keyUpEvent(e) {
+                if (e.key == "Enter") {
+                    onClickHandler()
+                }
+            }
+
+            return (
+                <div>
+                    <input type="text" onChange={onChangeHandler} onKeyUp={keyUpEvent} />
+                    <button onClick={onClickHandler}>검색</button>
+                </div>
+            )
+        }
+
+        const ImageBox = ({ imageUrl }) => {
+            return (
+                !!imageUrl ? <img src={imageUrl} alt="" style={{ width: "150px", height: "150px" }} /> : <h1>이미지 검색을 시작해주세요</h1>
+            )
+        }
+
+        function App() {
+            const [imageUrl, setImageUrl] = useState('')
+
+            return (
+                <>
+                    <SearchBox setImageUrl={setImageUrl} />
+                    <br />
+                    <ImageBox imageUrl={imageUrl} />
+                </>
+            )
+
+        }
+
+
+        ReactDOM.createRoot(document.getElementById("root")).render(<App />)
+
+    </script>
+
+
+
+</body>
+
+</html>

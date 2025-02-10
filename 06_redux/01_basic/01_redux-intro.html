@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script crossorigin src="https://unpkg.com/redux@4.2.0/dist/redux.js"></script>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        /*
+            리덕스란?
+             - 파편화되어 있는 state 를 관리하기 위한 라이브러리이다. 
+               앱의 상태(state)를 전부 하나의 store(저장소)안에 저장한다.
+               저장소에 있는 state 를 변경하기 위한 유일한 방법은
+               어떤 식으로 state 를 변경할 지에 대한 action(행위)이다. 
+               전달 받은 action 에 따라 state 를 어떻게 변경할 지를 정의하는 함수를 reducer 함수라고한다.
+
+            3가지 원칙
+
+            1. 스토어라는 하나뿐인 데이터 공간을 이용하기 때문에 신뢰할 수 있는 데이터이다.
+            2. State 는 리덕스에서 액션을 전달하는 리듀서 함수를 통해서만 변경할 수 있으며, 직접 변경은 못한다.
+            3. 변경은 오로지 순수함수로만 가능하다.
+        */
+
+        console.log('Redux : ', Redux)
+
+        const { createStore } = Redux
+
+        // reducer 함수는 초기 값(state) 과 action 을 전달 받는다.
+        function reducer(state = 0, action) {
+            /*
+                action 은 스토어에 운발할 데이터를 말하며 주문서의 개념이다.
+
+                {
+                    type : "ACTION_NAME",                       // 필수
+                    payload : {name:"조평훈", age : 20}         // 옵션 (저장할 값이 있으면 필요하고 없으면 작성 X)
+                }
+            */
+
+            switch (action.type) {
+                case 'INCREMENT':
+                    return state + 1;
+                case 'DECREMENT':
+                    return state - 1;
+                default:
+                    return state;
+            }
+
+        }
+
+        // 저장소 (store) 만들고 리듀서 전달
+        // store 가 제공하는 API 는 subscribe, dispatch, getState 등이 있다.
+        const store = createStore(reducer);
+
+        console.log("store : ", store)
+
+        store.subscribe(() => console.log(store.getState()))
+
+        store.dispatch({ type: 'INCREMENT' })
+        store.dispatch({ type: 'INCREMENT' })
+        store.dispatch({ type: 'INCREMENT' })
+        store.dispatch({ type: 'DECREMENT' })
+        store.dispatch({ type: 'DECfa' })
+
+        // ReactDOM.createRoot(document.getElementById("root")).render(element)
+
+    </script>
+
+</body>
+
+</html>

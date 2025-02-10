@@ -1,0 +1,16 @@
+.MenuBox {
+    display: flex;
+    flex-direction: column;
+}
+
+.searchBox {
+    width: 300px;
+    border: solid 1px brown;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    input {
+        width: 78%;
+    }
+}
